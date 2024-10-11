@@ -1,0 +1,15 @@
+{
+  "name": "openmct-ros-test-openmct",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "openmct": "latest",
+    "express": "latest"
+  },
+  "author": "",
+  "license": "ISC"
+}

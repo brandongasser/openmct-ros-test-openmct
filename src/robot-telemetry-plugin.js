@@ -32,6 +32,21 @@ const objectProvider = {
     }
 };
 
+function retryConnecting(domain, callback) {
+    const ws = new WebSocket(domain);
+    ws.onerror = function() {
+        setTimeout(function() {
+            retryConnecting(domain, callback);
+        }, 100);
+    };
+    ws.onopen = function() {
+        callback(ws);
+    };
+    ws.onclose = function() {
+        retryConnecting(domain, callback);
+    };
+}
+
 function RobotTelemetry() {
     return function install(openmct) {
         openmct.objects.addRoot({
@@ -47,19 +62,20 @@ function RobotTelemetry() {
 
         openmct.objects.addProvider('ros-test.telemetry', objectProvider);
 
-        const socket = new WebSocket('ws://localhost:8001');
         let listener = {};
 
-        socket.onmessage = function (msg) {
-            data = JSON.parse(msg.data);
-            point = {
-                timestamp: data.timestamp,
-                value: data.data
+        retryConnecting('ws://localhost:8001', function(ws) {
+            ws.onmessage = function (msg) {
+                data = JSON.parse(msg.data);
+                point = {
+                    timestamp: data.timestamp, 
+                    value: data.data
+                };
+                if (listener['robot']) {
+                    listener['robot'](point);
+                }
             };
-            if (listener['robot']) {
-                listener['robot'](point);
-            }
-        };
+        });
 
         const provider = {
             supportsSubscribe: function (domainObject) {

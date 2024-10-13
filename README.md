@@ -10,7 +10,7 @@ The server is a minimal express server for hosting this project.
 
 ### index.html
 
-This is the webpage for our project. Here, we install Open MCT plugins and start Open MCT.
+This is the webpage for the project. Here, we install Open MCT plugins and start Open MCT.
 
 ### Robot Telemetry Plugin
 

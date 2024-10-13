@@ -64,7 +64,7 @@ function RobotTelemetry() {
 
         let listener = {};
 
-        retryConnecting('ws://localhost:8001', function(ws) {
+        retryConnecting('ws://localhost:8001', function (ws) {
             ws.onmessage = function (msg) {
                 data = JSON.parse(msg.data);
                 point = {

@@ -37,7 +37,3 @@ $ npm start
 ```
 
 Open your web browser and navigate to http://localhost:8001
-
-## Known Issues
-
-- The ROS project must be running and accepting websocket clients when opening an Open MCT tab or the telemetry plugin won't connect to the ROS project. If you start the ROS project after you open an Open MCT tab, it still won't connect.
